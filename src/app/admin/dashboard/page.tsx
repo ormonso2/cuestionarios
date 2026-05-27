@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import { getSubmissions } from '../../actions';
 import {
   Building2, User, Mail, Phone, Calendar, RefreshCw, LogOut,
   ChevronRight, Search, Filter, BarChart2, Users, FileText,
@@ -72,12 +71,35 @@ export default function AdminDashboard() {
     }
   }, [router]);
 
+  // Fetch directo a Supabase REST API (evita Server Actions que fallan en Netlify)
   const loadData = useCallback(async () => {
     setLoading(true);
-    const res = await getSubmissions();
-    if (res.success) { setSubmissions(res.data as Submission[]); setError(''); }
-    else { setError(res.error || 'Error al cargar datos'); }
-    setLoading(false);
+    setError('');
+    try {
+      const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+      const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+      
+      const res = await fetch(
+        `${supabaseUrl}/rest/v1/demos_hutec?select=*&order=created_at.desc`,
+        {
+          headers: {
+            'apikey': supabaseKey,
+            'Authorization': `Bearer ${supabaseKey}`,
+          },
+        }
+      );
+      
+      if (!res.ok) {
+        throw new Error(`Error ${res.status}: ${await res.text()}`);
+      }
+      
+      const data = await res.json();
+      setSubmissions(data || []);
+    } catch (err: any) {
+      setError(err.message || 'Error al cargar datos');
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
   // Cargar datos inmediatamente al montar el componente

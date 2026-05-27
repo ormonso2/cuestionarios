@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import {
   Building2, User, Mail, Phone, Calendar, RefreshCw, LogOut,
   ChevronRight, Search, Filter, BarChart2, Users, FileText,
-  Clock, X, Briefcase, Link2, Sparkles, TrendingUp, Zap
+  Clock, X, Briefcase, Link2, Zap, Crown, Hexagon
 } from 'lucide-react';
 
 type Submission = {
@@ -46,26 +46,29 @@ function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString('es-MX', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
 }
 
-function StatCard({ icon, label, value, sub, color = 'cyan' }: { icon: React.ReactNode; label: string; value: string | number; sub?: string; color?: 'cyan' | 'violet' | 'amber' | 'emerald' }) {
-  const colorStyles = {
-    cyan: 'from-cyan-500/20 to-blue-500/20 border-cyan-500/30 text-cyan-400',
-    violet: 'from-violet-500/20 to-purple-500/20 border-violet-500/30 text-violet-400',
-    amber: 'from-amber-500/20 to-orange-500/20 border-amber-500/30 text-amber-400',
-    emerald: 'from-emerald-500/20 to-teal-500/20 border-emerald-500/30 text-emerald-400',
-  };
+// Neon dark elegant colors
+const NEON_COLORS = {
+  magenta: { bg: 'from-fuchsia-600/25 to-purple-700/25', border: 'border-fuchsia-500/40', text: 'text-fuchsia-400', glow: 'shadow-fuchsia-500/20' },
+  cyan: { bg: 'from-cyan-500/25 to-teal-600/25', border: 'border-cyan-400/40', text: 'text-cyan-400', glow: 'shadow-cyan-500/20' },
+  rose: { bg: 'from-rose-500/25 to-pink-600/25', border: 'border-rose-400/40', text: 'text-rose-400', glow: 'shadow-rose-500/20' },
+  amber: { bg: 'from-amber-500/25 to-orange-600/25', border: 'border-amber-400/40', text: 'text-amber-400', glow: 'shadow-amber-500/20' },
+};
+
+function StatCard({ icon, label, value, sub, color = 'cyan' }: { icon: React.ReactNode; label: string; value: string | number; sub?: string; color?: 'magenta' | 'cyan' | 'rose' | 'amber' }) {
+  const c = NEON_COLORS[color];
   
   return (
-    <div className={`relative overflow-hidden bg-gradient-to-br ${colorStyles[color]} backdrop-blur-sm border rounded-2xl p-5 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-${color}-500/10 group`}>
-      <div className="absolute top-0 right-0 w-24 h-24 bg-white/5 rounded-full blur-2xl -mr-8 -mt-8 group-hover:bg-white/10 transition-all" />
+    <div className={`relative overflow-hidden bg-gradient-to-br ${c.bg} backdrop-blur-md border ${c.border} rounded-2xl p-5 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg ${c.glow} group`}>
+      <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full blur-3xl -mr-12 -mt-12 group-hover:bg-white/10 transition-all" />
       <div className="relative">
         <div className="flex items-center gap-3 mb-3">
-          <div className="p-2 rounded-xl bg-white/10 backdrop-blur-sm">
+          <div className={`p-2.5 rounded-xl bg-black/40 border ${c.border} ${c.text}`}>
             {icon}
           </div>
-          <span className="text-xs uppercase tracking-widest font-semibold opacity-80">{label}</span>
+          <span className="text-xs uppercase tracking-[0.2em] font-bold text-slate-400">{label}</span>
         </div>
-        <div className="text-3xl sm:text-4xl font-black text-white tracking-tight">{value}</div>
-        {sub && <div className="text-xs opacity-70 mt-1 font-medium">{sub}</div>}
+        <div className="text-3xl sm:text-4xl font-black text-white tracking-tight drop-shadow-lg">{value}</div>
+        {sub && <div className="text-xs text-slate-500 mt-1.5 font-medium tracking-wide">{sub}</div>}
       </div>
     </div>
   );
@@ -145,45 +148,47 @@ export default function AdminDashboard() {
 
   return (
     <div className="min-h-screen bg-[#060a10] text-white font-sans relative overflow-x-hidden">
-      {/* Animated Background */}
+      {/* Neon Dark Background */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        {/* Gradient orbs */}
-        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-cyan-500/20 rounded-full blur-[120px] animate-pulse" />
-        <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-violet-500/15 rounded-full blur-[100px] animate-pulse delay-1000" />
-        <div className="absolute top-1/2 left-1/2 w-[300px] h-[300px] bg-emerald-500/10 rounded-full blur-[80px] -translate-x-1/2 -translate-y-1/2" />
-        {/* Grid pattern */}
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2260%22%20height%3D%2260%22%20viewBox%3D%220%200%2060%2060%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20fill%3D%22%23ffffff%22%20fill-opacity%3D%220.03%22%3E%3Cpath%20d%3D%22M36%2034v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6%2034v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6%204V0H4v4H0v2h4v4h2V6h4V4H6z%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-50" />
+        {/* Deep dark gradient base */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#020408] via-[#0a0a12] to-[#0d0d1a]" />
+        {/* Neon orbs */}
+        <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-fuchsia-600/15 rounded-full blur-[150px] animate-pulse" />
+        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-cyan-500/10 rounded-full blur-[130px] animate-pulse delay-1000" />
+        <div className="absolute top-1/2 right-0 w-[400px] h-[400px] bg-purple-600/10 rounded-full blur-[100px]" />
+        {/* Subtle grid pattern */}
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2280%22%20height%3D%2280%22%20viewBox%3D%220%200%2080%2080%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20fill%3D%22%23ff00ff%22%20fill-opacity%3D%220.02%22%3E%3Cpath%20d%3D%22M0%200h40v40H0V0zm40%2040h40v40H40V40z%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-70" />
+        {/* Noise texture */}
+        <div className="absolute inset-0 opacity-[0.015]" style={{backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noise%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noise)%22/%3E%3C/svg%3E")'}} />
       </div>
       
       {/* Header */}
-      <header className="relative border-b border-white/10 bg-black/20 backdrop-blur-xl sticky top-0 z-30">
+      <header className="relative border-b border-white/5 bg-black/30 backdrop-blur-2xl sticky top-0 z-30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <div className="relative">
-              <div className="w-10 h-10 bg-gradient-to-br from-cyan-400 to-blue-600 rounded-xl flex items-center justify-center text-lg font-black text-white shadow-lg shadow-cyan-500/30">
+            <div className="relative group">
+              <div className="w-10 h-10 bg-gradient-to-br from-[#00f2fe] to-[#0066cc] rounded-xl flex items-center justify-center text-lg font-black text-white shadow-lg shadow-cyan-500/25 group-hover:shadow-cyan-500/40 transition-all">
                 H
               </div>
-              <div className="absolute -top-1 -right-1 w-3 h-3 bg-emerald-400 rounded-full animate-pulse" />
             </div>
             <div>
-              <h1 className="text-base font-bold text-white leading-tight flex items-center gap-2">
+              <h1 className="text-base font-bold text-white leading-tight tracking-wide">
                 HUTEC Admin
-                <Sparkles size={14} className="text-amber-400" />
               </h1>
-              <p className="text-xs text-slate-400 leading-tight">Panel de Control CRM</p>
+              <p className="text-xs text-slate-500 leading-tight tracking-wider uppercase">Panel CRM</p>
             </div>
           </div>
           <div className="flex items-center gap-2 sm:gap-3">
             <button onClick={() => router.push('/admin/questionnaire')}
-              className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500/20 to-blue-500/20 border border-cyan-500/40 text-cyan-300 text-sm font-semibold hover:from-cyan-500/30 hover:to-blue-500/30 hover:border-cyan-400/50 transition-all duration-300 shadow-lg shadow-cyan-500/10">
-              <Link2 size={16} /> <span className="hidden sm:inline">Cuestionarios</span>
+              className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-fuchsia-600/15 border border-fuchsia-500/40 text-fuchsia-400 text-sm font-semibold hover:bg-fuchsia-600/25 hover:border-fuchsia-400/60 transition-all duration-300 shadow-lg shadow-fuchsia-500/10">
+              <Crown size={16} /> <span className="hidden sm:inline">Cuestionarios</span>
             </button>
             <button onClick={loadData} disabled={loading}
-              className="flex items-center gap-2 px-3 py-2.5 rounded-xl border border-white/20 text-slate-300 text-sm font-medium hover:bg-white/10 hover:text-white transition-all duration-300">
+              className="flex items-center gap-2 px-3 py-2.5 rounded-xl border border-white/10 text-slate-400 text-sm font-medium hover:bg-white/5 hover:text-slate-200 transition-all duration-300">
               <RefreshCw size={16} className={loading ? 'animate-spin' : ''} /> <span className="hidden sm:inline">Actualizar</span>
             </button>
             <button onClick={handleLogout}
-              className="flex items-center gap-2 px-3 py-2.5 rounded-xl border border-rose-500/30 text-rose-400 text-sm font-medium hover:bg-rose-500/10 transition-all duration-300">
+              className="flex items-center gap-2 px-3 py-2.5 rounded-xl border border-rose-500/30 text-rose-400 text-sm font-medium hover:bg-rose-500/15 transition-all duration-300">
               <LogOut size={16} /> <span className="hidden sm:inline">Salir</span>
             </button>
           </div>
@@ -203,8 +208,8 @@ export default function AdminDashboard() {
         {/* Stats */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 mb-8">
           <StatCard icon={<FileText size={22} />} label="Total Leads" value={submissions.length} sub="registros totales" color="cyan" />
-          <StatCard icon={<TrendingUp size={22} />} label="Hoy" value={todayCount} sub="formularios hoy" color="emerald" />
-          <StatCard icon={<Users size={22} />} label="Industrias" value={industries.length} sub="sectores distintos" color="violet" />
+          <StatCard icon={<Calendar size={22} />} label="Hoy" value={todayCount} sub="formularios hoy" color="rose" />
+          <StatCard icon={<Users size={22} />} label="Industrias" value={industries.length} sub="sectores distintos" color="magenta" />
           <StatCard icon={<BarChart2 size={22} />} label="Este Mes" value={submissions.filter(s => {
             const d = new Date(s.created_at);
             const now = new Date();
@@ -232,9 +237,9 @@ export default function AdminDashboard() {
 
         {/* Table */}
         {error ? (
-          <div className="bg-gradient-to-r from-rose-500/10 to-red-500/10 border border-rose-500/30 rounded-2xl p-6 text-rose-400">
+          <div className="bg-gradient-to-r from-fuchsia-500/10 to-purple-500/10 border border-fuchsia-500/30 rounded-2xl p-6 text-fuchsia-400">
             <div className="flex items-center gap-3 mb-2">
-              <div className="w-10 h-10 rounded-xl bg-rose-500/20 flex items-center justify-center">
+              <div className="w-10 h-10 rounded-xl bg-fuchsia-500/20 flex items-center justify-center">
                 <X size={20} />
               </div>
               <span className="font-semibold">Error de conexión</span>
@@ -244,8 +249,8 @@ export default function AdminDashboard() {
         ) : loading ? (
           <div className="flex flex-col items-center justify-center py-20 text-slate-400 gap-4">
             <div className="relative">
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-blue-500/20 border border-cyan-500/30 flex items-center justify-center">
-                <RefreshCw size={28} className="animate-spin text-cyan-400" />
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-fuchsia-500/20 to-purple-600/20 border border-fuchsia-500/30 flex items-center justify-center">
+                <RefreshCw size={28} className="animate-spin text-fuchsia-400" />
               </div>
             </div>
             <p className="text-base font-medium">Cargando registros...</p>
@@ -279,7 +284,7 @@ export default function AdminDashboard() {
                       <tr key={sub.id} className="group hover:bg-white/[0.05] transition-all duration-200 cursor-pointer" onClick={() => setSelected(sub)}>
                         <td className="px-6 py-4">
                           <div className="flex items-center gap-4">
-                            <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-cyan-500/20 to-blue-500/20 border border-cyan-500/30 flex items-center justify-center text-cyan-400 flex-shrink-0 group-hover:scale-110 transition-transform">
+                            <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-fuchsia-500/20 to-purple-600/20 border border-fuchsia-500/30 flex items-center justify-center text-fuchsia-400 flex-shrink-0 group-hover:scale-110 transition-transform">
                               <Building2 size={18} />
                             </div>
                             <div>
@@ -294,7 +299,7 @@ export default function AdminDashboard() {
                         </td>
                         <td className="px-6 py-4 hidden lg:table-cell">
                           {r.industria ? (
-                            <span className="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-semibold bg-gradient-to-r from-cyan-500/20 to-blue-500/20 text-cyan-300 border border-cyan-500/30">
+                            <span className="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-semibold bg-gradient-to-r from-fuchsia-500/20 to-purple-600/20 text-fuchsia-300 border border-fuchsia-500/30">
                               {r.industria}
                             </span>
                           ) : (
@@ -309,7 +314,7 @@ export default function AdminDashboard() {
                           </div>
                         </td>
                         <td className="px-6 py-4">
-                          <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-slate-500 group-hover:bg-cyan-500/20 group-hover:text-cyan-400 transition-all">
+                          <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-slate-500 group-hover:bg-fuchsia-500/20 group-hover:text-fuchsia-400 transition-all">
                             <ChevronRight size={18} />
                           </div>
                         </td>

@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import {
   Building2, User, Mail, Phone, Calendar, RefreshCw, LogOut,
   ChevronRight, Search, Filter, BarChart2, Users, FileText,
-  Clock, X, Briefcase, Link2
+  Clock, X, Briefcase, Link2, Sparkles, TrendingUp, Zap
 } from 'lucide-react';
 
 type Submission = {
@@ -46,12 +46,27 @@ function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString('es-MX', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
 }
 
-function StatCard({ icon, label, value, sub }: { icon: React.ReactNode; label: string; value: string | number; sub?: string }) {
+function StatCard({ icon, label, value, sub, color = 'cyan' }: { icon: React.ReactNode; label: string; value: string | number; sub?: string; color?: 'cyan' | 'violet' | 'amber' | 'emerald' }) {
+  const colorStyles = {
+    cyan: 'from-cyan-500/20 to-blue-500/20 border-cyan-500/30 text-cyan-400',
+    violet: 'from-violet-500/20 to-purple-500/20 border-violet-500/30 text-violet-400',
+    amber: 'from-amber-500/20 to-orange-500/20 border-amber-500/30 text-amber-400',
+    emerald: 'from-emerald-500/20 to-teal-500/20 border-emerald-500/30 text-emerald-400',
+  };
+  
   return (
-    <div className="bg-white/[0.03] border border-white/10 rounded-xl p-4">
-      <div className="flex items-center gap-2 mb-2 text-slate-400">{icon}<span className="text-xs uppercase tracking-wider font-medium">{label}</span></div>
-      <div className="text-2xl font-bold text-white">{value}</div>
-      {sub && <div className="text-xs text-slate-500 mt-0.5">{sub}</div>}
+    <div className={`relative overflow-hidden bg-gradient-to-br ${colorStyles[color]} backdrop-blur-sm border rounded-2xl p-5 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-${color}-500/10 group`}>
+      <div className="absolute top-0 right-0 w-24 h-24 bg-white/5 rounded-full blur-2xl -mr-8 -mt-8 group-hover:bg-white/10 transition-all" />
+      <div className="relative">
+        <div className="flex items-center gap-3 mb-3">
+          <div className="p-2 rounded-xl bg-white/10 backdrop-blur-sm">
+            {icon}
+          </div>
+          <span className="text-xs uppercase tracking-widest font-semibold opacity-80">{label}</span>
+        </div>
+        <div className="text-3xl sm:text-4xl font-black text-white tracking-tight">{value}</div>
+        {sub && <div className="text-xs opacity-70 mt-1 font-medium">{sub}</div>}
+      </div>
     </div>
   );
 }
@@ -129,172 +144,279 @@ export default function AdminDashboard() {
   }).length;
 
   return (
-    <div className="min-h-screen bg-[#060a10] text-white font-sans">
+    <div className="min-h-screen bg-[#060a10] text-white font-sans relative overflow-x-hidden">
+      {/* Animated Background */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+        {/* Gradient orbs */}
+        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-cyan-500/20 rounded-full blur-[120px] animate-pulse" />
+        <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-violet-500/15 rounded-full blur-[100px] animate-pulse delay-1000" />
+        <div className="absolute top-1/2 left-1/2 w-[300px] h-[300px] bg-emerald-500/10 rounded-full blur-[80px] -translate-x-1/2 -translate-y-1/2" />
+        {/* Grid pattern */}
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2260%22%20height%3D%2260%22%20viewBox%3D%220%200%2060%2060%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20fill%3D%22%23ffffff%22%20fill-opacity%3D%220.03%22%3E%3Cpath%20d%3D%22M36%2034v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6%2034v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6%204V0H4v4H0v2h4v4h2V6h4V4H6z%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-50" />
+      </div>
+      
       {/* Header */}
-      <header className="border-b border-white/8 bg-black/40 backdrop-blur-md sticky top-0 z-30">
-        <div className="max-w-7xl mx-auto px-4 py-3.5 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-[#00f2fe] rounded-lg flex items-center justify-center text-sm font-black text-black shadow-[0_0_15px_rgba(0,242,254,0.4)]">H</div>
+      <header className="relative border-b border-white/10 bg-black/20 backdrop-blur-xl sticky top-0 z-30">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <div className="relative">
+              <div className="w-10 h-10 bg-gradient-to-br from-cyan-400 to-blue-600 rounded-xl flex items-center justify-center text-lg font-black text-white shadow-lg shadow-cyan-500/30">
+                H
+              </div>
+              <div className="absolute -top-1 -right-1 w-3 h-3 bg-emerald-400 rounded-full animate-pulse" />
+            </div>
             <div>
-              <h1 className="text-sm font-semibold text-white leading-tight">HUTEC Admin</h1>
-              <p className="text-[10px] text-slate-500 leading-tight">Panel CRM</p>
+              <h1 className="text-base font-bold text-white leading-tight flex items-center gap-2">
+                HUTEC Admin
+                <Sparkles size={14} className="text-amber-400" />
+              </h1>
+              <p className="text-xs text-slate-400 leading-tight">Panel de Control CRM</p>
             </div>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 sm:gap-3">
             <button onClick={() => router.push('/admin/questionnaire')}
-              className="flex items-center gap-1.5 px-3 py-2 rounded-lg border border-[#00f2fe]/30 text-[#00f2fe] text-xs font-medium hover:bg-[#00f2fe]/5 transition-all">
-              <Link2 size={13} /> Cuestionarios
+              className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500/20 to-blue-500/20 border border-cyan-500/40 text-cyan-300 text-sm font-semibold hover:from-cyan-500/30 hover:to-blue-500/30 hover:border-cyan-400/50 transition-all duration-300 shadow-lg shadow-cyan-500/10">
+              <Link2 size={16} /> <span className="hidden sm:inline">Cuestionarios</span>
             </button>
             <button onClick={loadData} disabled={loading}
-              className="flex items-center gap-1.5 px-3 py-2 rounded-lg border border-white/10 text-slate-400 text-xs hover:bg-white/5 hover:text-white transition-all">
-              <RefreshCw size={13} className={loading ? 'animate-spin' : ''} /> Actualizar
+              className="flex items-center gap-2 px-3 py-2.5 rounded-xl border border-white/20 text-slate-300 text-sm font-medium hover:bg-white/10 hover:text-white transition-all duration-300">
+              <RefreshCw size={16} className={loading ? 'animate-spin' : ''} /> <span className="hidden sm:inline">Actualizar</span>
             </button>
             <button onClick={handleLogout}
-              className="flex items-center gap-1.5 px-3 py-2 rounded-lg border border-white/10 text-slate-400 text-xs hover:bg-white/5 hover:text-white transition-all">
-              <LogOut size={13} /> Salir
+              className="flex items-center gap-2 px-3 py-2.5 rounded-xl border border-rose-500/30 text-rose-400 text-sm font-medium hover:bg-rose-500/10 transition-all duration-300">
+              <LogOut size={16} /> <span className="hidden sm:inline">Salir</span>
             </button>
           </div>
         </div>
       </header>
 
-      <div className="max-w-7xl mx-auto px-4 py-6">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Welcome Message */}
+        <div className="mb-8">
+          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2 flex items-center gap-3">
+            <Zap className="text-amber-400" size={28} />
+            Dashboard de Leads
+          </h2>
+          <p className="text-slate-400 text-sm sm:text-base">Visualiza y gestiona todos los registros de tus cuestionarios</p>
+        </div>
+        
         {/* Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
-          <StatCard icon={<FileText size={15} />} label="Total Leads" value={submissions.length} sub="registros totales" />
-          <StatCard icon={<Calendar size={15} />} label="Hoy" value={todayCount} sub="formularios hoy" />
-          <StatCard icon={<Users size={15} />} label="Industrias" value={industries.length} sub="sectores distintos" />
-          <StatCard icon={<BarChart2 size={15} />} label="Este Mes" value={submissions.filter(s => {
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 mb-8">
+          <StatCard icon={<FileText size={22} />} label="Total Leads" value={submissions.length} sub="registros totales" color="cyan" />
+          <StatCard icon={<TrendingUp size={22} />} label="Hoy" value={todayCount} sub="formularios hoy" color="emerald" />
+          <StatCard icon={<Users size={22} />} label="Industrias" value={industries.length} sub="sectores distintos" color="violet" />
+          <StatCard icon={<BarChart2 size={22} />} label="Este Mes" value={submissions.filter(s => {
             const d = new Date(s.created_at);
             const now = new Date();
             return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
-          }).length} sub="del mes actual" />
+          }).length} sub="del mes actual" color="amber" />
         </div>
 
         {/* Filters */}
-        <div className="flex flex-col sm:flex-row gap-3 mb-4">
+        <div className="flex flex-col sm:flex-row gap-4 mb-6">
           <div className="relative flex-1">
-            <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
+            <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
             <input type="text" placeholder="Buscar empresa, nombre, email..." value={search} onChange={e => setSearch(e.target.value)}
-              className="w-full pl-9 pr-4 py-2.5 bg-white/[0.03] border border-white/10 rounded-xl text-sm text-white focus:outline-none focus:border-[#00f2fe]/40 placeholder:text-slate-600" />
+              className="w-full pl-12 pr-4 py-4 bg-white/5 backdrop-blur-sm border border-white/15 rounded-2xl text-base text-white focus:outline-none focus:border-cyan-500/50 focus:bg-white/10 transition-all placeholder:text-slate-500 shadow-lg shadow-black/20" />
           </div>
-          <div className="relative">
-            <Filter size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
+          <div className="relative sm:min-w-[200px]">
+            <Filter size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
             <select value={filterIndustry} onChange={e => setFilterIndustry(e.target.value)}
-              className="pl-9 pr-8 py-2.5 bg-white/[0.03] border border-white/10 rounded-xl text-sm text-white focus:outline-none focus:border-[#00f2fe]/40 appearance-none cursor-pointer min-w-[160px]">
-              <option value="" className="bg-slate-900">Todas las industrias</option>
+              className="w-full sm:w-auto pl-12 pr-10 py-4 bg-white/5 backdrop-blur-sm border border-white/15 rounded-2xl text-base text-white focus:outline-none focus:border-cyan-500/50 focus:bg-white/10 transition-all appearance-none cursor-pointer shadow-lg shadow-black/20">
+              <option value="" className="bg-slate-900 text-slate-300">Todas las industrias</option>
               {industries.map(i => <option key={i} value={i} className="bg-slate-900">{i}</option>)}
             </select>
+            <ChevronRight size={18} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 rotate-90 pointer-events-none" />
           </div>
         </div>
 
         {/* Table */}
         {error ? (
-          <div className="bg-rose-500/10 border border-rose-500/20 rounded-xl p-5 text-rose-400 text-sm">
-            Error: {error} — Revisa la política RLS de Supabase (SELECT para anon).
+          <div className="bg-gradient-to-r from-rose-500/10 to-red-500/10 border border-rose-500/30 rounded-2xl p-6 text-rose-400">
+            <div className="flex items-center gap-3 mb-2">
+              <div className="w-10 h-10 rounded-xl bg-rose-500/20 flex items-center justify-center">
+                <X size={20} />
+              </div>
+              <span className="font-semibold">Error de conexión</span>
+            </div>
+            <p className="text-sm opacity-80">{error} — Revisa la política RLS de Supabase (SELECT para anon).</p>
           </div>
         ) : loading ? (
-          <div className="flex items-center justify-center py-20 text-slate-500 gap-3">
-            <RefreshCw size={18} className="animate-spin" /> Cargando registros...
+          <div className="flex flex-col items-center justify-center py-20 text-slate-400 gap-4">
+            <div className="relative">
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-blue-500/20 border border-cyan-500/30 flex items-center justify-center">
+                <RefreshCw size={28} className="animate-spin text-cyan-400" />
+              </div>
+            </div>
+            <p className="text-base font-medium">Cargando registros...</p>
           </div>
         ) : filtered.length === 0 ? (
-          <div className="text-center py-20 text-slate-500">
-            <FileText size={40} className="mx-auto mb-3 opacity-30" />
-            <p className="text-sm">No se encontraron registros.</p>
+          <div className="text-center py-20 text-slate-400">
+            <div className="w-20 h-20 mx-auto mb-4 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center">
+              <FileText size={32} className="opacity-40" />
+            </div>
+            <p className="text-lg font-medium mb-1">No se encontraron registros</p>
+            <p className="text-sm opacity-60">Intenta ajustar los filtros de búsqueda</p>
           </div>
         ) : (
-          <div className="bg-white/[0.02] border border-white/8 rounded-2xl overflow-hidden">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b border-white/8 bg-white/[0.02]">
-                  <th className="text-left px-4 py-3 text-xs text-slate-500 font-medium uppercase tracking-wider">Empresa</th>
-                  <th className="text-left px-4 py-3 text-xs text-slate-500 font-medium uppercase tracking-wider hidden md:table-cell">Contacto</th>
-                  <th className="text-left px-4 py-3 text-xs text-slate-500 font-medium uppercase tracking-wider hidden lg:table-cell">Industria</th>
-                  <th className="text-left px-4 py-3 text-xs text-slate-500 font-medium uppercase tracking-wider hidden lg:table-cell">Empleados</th>
-                  <th className="text-left px-4 py-3 text-xs text-slate-500 font-medium uppercase tracking-wider">Fecha</th>
-                  <th className="px-4 py-3"></th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-white/5">
-                {filtered.map(sub => {
-                  const r = sub.responses || {};
-                  return (
-                    <tr key={sub.id} className="hover:bg-white/[0.03] transition-colors cursor-pointer" onClick={() => setSelected(sub)}>
-                      <td className="px-4 py-3.5">
-                        <div className="flex items-center gap-2.5">
-                          <div className="w-8 h-8 rounded-lg bg-[#00f2fe]/10 border border-[#00f2fe]/20 flex items-center justify-center text-[#00f2fe] flex-shrink-0">
-                            <Building2 size={14} />
+          <div className="bg-white/[0.03] backdrop-blur-sm border border-white/10 rounded-3xl overflow-hidden shadow-xl shadow-black/20">
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead>
+                  <tr className="border-b border-white/10 bg-white/[0.05]">
+                    <th className="text-left px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-400">Empresa</th>
+                    <th className="text-left px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-400 hidden md:table-cell">Contacto</th>
+                    <th className="text-left px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-400 hidden lg:table-cell">Industria</th>
+                    <th className="text-left px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-400 hidden lg:table-cell">Empleados</th>
+                    <th className="text-left px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-400">Fecha</th>
+                    <th className="px-6 py-4"></th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-white/5">
+                  {filtered.map((sub, idx) => {
+                    const r = sub.responses || {};
+                    return (
+                      <tr key={sub.id} className="group hover:bg-white/[0.05] transition-all duration-200 cursor-pointer" onClick={() => setSelected(sub)}>
+                        <td className="px-6 py-4">
+                          <div className="flex items-center gap-4">
+                            <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-cyan-500/20 to-blue-500/20 border border-cyan-500/30 flex items-center justify-center text-cyan-400 flex-shrink-0 group-hover:scale-110 transition-transform">
+                              <Building2 size={18} />
+                            </div>
+                            <div>
+                              <div className="font-semibold text-white text-sm sm:text-base leading-tight">{r.empresa || <span className="text-slate-500 italic">Sin nombre</span>}</div>
+                              <div className="text-xs text-slate-500 leading-tight mt-0.5">{r.posicion || '—'}</div>
+                            </div>
                           </div>
-                          <div>
-                            <div className="font-medium text-white text-sm leading-tight">{r.empresa || <span className="text-slate-500 italic">Sin nombre</span>}</div>
-                            <div className="text-xs text-slate-500 leading-tight">{r.posicion || ''}</div>
+                        </td>
+                        <td className="px-6 py-4 hidden md:table-cell">
+                          <div className="text-slate-300 text-sm font-medium">{r.nombre || '—'}</div>
+                          <div className="text-slate-500 text-xs mt-0.5 truncate max-w-[180px]">{r.email || ''}</div>
+                        </td>
+                        <td className="px-6 py-4 hidden lg:table-cell">
+                          {r.industria ? (
+                            <span className="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-semibold bg-gradient-to-r from-cyan-500/20 to-blue-500/20 text-cyan-300 border border-cyan-500/30">
+                              {r.industria}
+                            </span>
+                          ) : (
+                            <span className="text-slate-500 text-sm">—</span>
+                          )}
+                        </td>
+                        <td className="px-6 py-4 hidden lg:table-cell text-slate-400 text-sm font-medium">{r.empleados || '—'}</td>
+                        <td className="px-6 py-4">
+                          <div className="flex items-center gap-2 text-slate-500 text-xs">
+                            <Clock size={14} />
+                            <span className="font-medium">{formatDate(sub.created_at)}</span>
                           </div>
-                        </div>
-                      </td>
-                      <td className="px-4 py-3.5 hidden md:table-cell">
-                        <div className="text-slate-300 text-sm">{r.nombre || '—'}</div>
-                        <div className="text-slate-500 text-xs">{r.email || ''}</div>
-                      </td>
-                      <td className="px-4 py-3.5 hidden lg:table-cell">
-                        {r.industria ? (
-                          <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs bg-teal-500/10 text-teal-400 border border-teal-500/20">{r.industria}</span>
-                        ) : '—'}
-                      </td>
-                      <td className="px-4 py-3.5 hidden lg:table-cell text-slate-400 text-sm">{r.empleados || '—'}</td>
-                      <td className="px-4 py-3.5">
-                        <div className="flex items-center gap-1.5 text-slate-500 text-xs">
-                          <Clock size={11} />
-                          {formatDate(sub.created_at)}
-                        </div>
-                      </td>
-                      <td className="px-4 py-3.5 text-slate-600">
-                        <ChevronRight size={15} />
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+                        </td>
+                        <td className="px-6 py-4">
+                          <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-slate-500 group-hover:bg-cyan-500/20 group-hover:text-cyan-400 transition-all">
+                            <ChevronRight size={18} />
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
           </div>
         )}
 
-        <p className="text-xs text-slate-600 mt-3">{filtered.length} de {submissions.length} registros</p>
+        <div className="flex items-center justify-between mt-4 px-2">
+          <p className="text-sm text-slate-400">
+            Mostrando <span className="text-white font-semibold">{filtered.length}</span> de <span className="text-white font-semibold">{submissions.length}</span> registros
+          </p>
+          {filtered.length > 0 && (
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="text-xs text-slate-500">Datos actualizados</span>
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Detail Drawer */}
       {selected && (
         <div className="fixed inset-0 z-50 flex">
-          <div className="flex-1 bg-black/60 backdrop-blur-sm" onClick={() => setSelected(null)} />
-          <div className="w-full max-w-[480px] bg-[#0d1117] border-l border-white/10 overflow-y-auto">
-            <div className="sticky top-0 bg-[#0d1117]/95 backdrop-blur border-b border-white/10 px-5 py-4 flex items-center justify-between z-10">
-              <div>
-                <h2 className="font-semibold text-white">{selected.responses?.empresa || 'Sin nombre'}</h2>
-                <p className="text-xs text-slate-500">{formatDate(selected.created_at)}</p>
+          <div className="flex-1 bg-black/70 backdrop-blur-md" onClick={() => setSelected(null)} />
+          <div className="w-full max-w-[520px] bg-gradient-to-b from-[#0d1117] to-[#0a0e14] border-l border-white/10 overflow-y-auto shadow-2xl">
+            {/* Header */}
+            <div className="sticky top-0 bg-[#0d1117]/98 backdrop-blur-xl border-b border-white/10 px-6 py-5 flex items-center justify-between z-10">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-blue-500/20 border border-cyan-500/30 flex items-center justify-center">
+                  <Building2 size={22} className="text-cyan-400" />
+                </div>
+                <div>
+                  <h2 className="font-bold text-white text-lg">{selected.responses?.empresa || 'Sin nombre'}</h2>
+                  <p className="text-xs text-slate-500 flex items-center gap-1.5">
+                    <Calendar size={12} />
+                    {formatDate(selected.created_at)}
+                  </p>
+                </div>
               </div>
-              <button onClick={() => setSelected(null)} className="w-8 h-8 rounded-lg border border-white/10 flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/5 transition-all">
-                <X size={15} />
+              <button onClick={() => setSelected(null)} className="w-10 h-10 rounded-xl border border-white/10 flex items-center justify-center text-slate-400 hover:text-white hover:bg-rose-500/20 hover:border-rose-500/30 hover:text-rose-400 transition-all">
+                <X size={18} />
               </button>
             </div>
 
-            <div className="p-5 space-y-3">
+            <div className="p-6 space-y-5">
               {/* Contact block */}
-              <div className="bg-white/[0.03] border border-white/8 rounded-xl p-4 space-y-2.5">
-                <p className="text-[10px] text-slate-500 uppercase tracking-widest font-medium mb-3">Contacto</p>
-                {selected.responses?.nombre && <div className="flex items-center gap-3"><User size={13} className="text-slate-500 flex-shrink-0" /><span className="text-sm text-slate-200">{selected.responses.nombre}</span></div>}
-                {selected.responses?.posicion && <div className="flex items-center gap-3"><Briefcase size={13} className="text-slate-500 flex-shrink-0" /><span className="text-sm text-slate-200">{selected.responses.posicion}</span></div>}
-                {selected.responses?.email && <div className="flex items-center gap-3"><Mail size={13} className="text-slate-500 flex-shrink-0" /><a href={`mailto:${selected.responses.email}`} className="text-sm text-[#00f2fe] hover:underline">{selected.responses.email}</a></div>}
-                {selected.responses?.telefono && <div className="flex items-center gap-3"><Phone size={13} className="text-slate-500 flex-shrink-0" /><a href={`tel:${selected.responses.telefono}`} className="text-sm text-[#00f2fe] hover:underline">{selected.responses.telefono}</a></div>}
+              <div className="bg-white/[0.05] backdrop-blur-sm border border-white/10 rounded-2xl p-5">
+                <p className="text-xs text-cyan-400 uppercase tracking-widest font-bold mb-4 flex items-center gap-2">
+                  <User size={14} /> Información de Contacto
+                </p>
+                <div className="space-y-3">
+                  {selected.responses?.nombre && (
+                    <div className="flex items-center gap-4 p-3 rounded-xl bg-white/[0.03]">
+                      <User size={16} className="text-slate-400" />
+                      <div>
+                        <p className="text-xs text-slate-500">Nombre</p>
+                        <p className="text-sm text-white font-medium">{selected.responses.nombre}</p>
+                      </div>
+                    </div>
+                  )}
+                  {selected.responses?.posicion && (
+                    <div className="flex items-center gap-4 p-3 rounded-xl bg-white/[0.03]">
+                      <Briefcase size={16} className="text-slate-400" />
+                      <div>
+                        <p className="text-xs text-slate-500">Puesto</p>
+                        <p className="text-sm text-white font-medium">{selected.responses.posicion}</p>
+                      </div>
+                    </div>
+                  )}
+                  {selected.responses?.email && (
+                    <a href={`mailto:${selected.responses.email}`} className="flex items-center gap-4 p-3 rounded-xl bg-white/[0.03] hover:bg-cyan-500/10 transition-all group">
+                      <Mail size={16} className="text-slate-400 group-hover:text-cyan-400" />
+                      <div>
+                        <p className="text-xs text-slate-500">Correo electrónico</p>
+                        <p className="text-sm text-cyan-400 font-medium">{selected.responses.email}</p>
+                      </div>
+                    </a>
+                  )}
+                  {selected.responses?.telefono && (
+                    <a href={`tel:${selected.responses.telefono}`} className="flex items-center gap-4 p-3 rounded-xl bg-white/[0.03] hover:bg-emerald-500/10 transition-all group">
+                      <Phone size={16} className="text-slate-400 group-hover:text-emerald-400" />
+                      <div>
+                        <p className="text-xs text-slate-500">Teléfono</p>
+                        <p className="text-sm text-emerald-400 font-medium">{selected.responses.telefono}</p>
+                      </div>
+                    </a>
+                  )}
+                </div>
               </div>
 
               {/* All responses */}
-              <div className="bg-white/[0.03] border border-white/8 rounded-xl p-4">
-                <p className="text-[10px] text-slate-500 uppercase tracking-widest font-medium mb-3">Respuestas del formulario</p>
-                <div className="space-y-3">
+              <div className="bg-white/[0.05] backdrop-blur-sm border border-white/10 rounded-2xl p-5">
+                <p className="text-xs text-violet-400 uppercase tracking-widest font-bold mb-4 flex items-center gap-2">
+                  <FileText size={14} /> Detalles del Formulario
+                </p>
+                <div className="space-y-4 max-h-[400px] overflow-y-auto pr-2">
                   {Object.entries(selected.responses || {}).map(([key, val]) => {
-                    if (['nombre', 'posicion', 'email', 'telefono'].includes(key)) return null;
+                    if (['nombre', 'posicion', 'email', 'telefono', 'empresa'].includes(key)) return null;
                     if (!val || (typeof val === 'string' && val.trim() === '')) return null;
                     return (
-                      <div key={key}>
-                        <p className="text-[11px] text-slate-500 font-medium mb-0.5">{FIELD_LABELS[key] || key}</p>
+                      <div key={key} className="p-3 rounded-xl bg-white/[0.03]">
+                        <p className="text-[11px] text-slate-500 font-semibold uppercase tracking-wide mb-1.5">{FIELD_LABELS[key] || key}</p>
                         <p className="text-sm text-slate-200 leading-relaxed">{String(val).split(',').join(' · ')}</p>
                       </div>
                     );
@@ -303,18 +425,18 @@ export default function AdminDashboard() {
               </div>
 
               {/* Actions */}
-              <div className="flex gap-2">
+              <div className="flex gap-3 sticky bottom-0 pt-2 bg-gradient-to-t from-[#0a0e14] to-transparent">
                 {selected.responses?.email && (
                   <a href={`mailto:${selected.responses.email}?subject=Demostración HUTEC&body=Hola ${selected.responses.nombre || ''},%0D%0A%0D%0AEn HUTEC Digital nos complace seguir con el proceso de demostración para ${selected.responses.empresa || 'su empresa'}.`}
-                    className="flex-1 py-3 flex items-center justify-center gap-2 bg-[#00f2fe] text-black rounded-xl text-sm font-semibold hover:shadow-[0_0_20px_rgba(0,242,254,0.3)] transition-all">
-                    <Mail size={15} /> Enviar correo
+                    className="flex-1 py-4 flex items-center justify-center gap-2 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-xl text-sm font-bold hover:shadow-lg hover:shadow-cyan-500/30 transition-all">
+                    <Mail size={18} /> Enviar correo
                   </a>
                 )}
                 {selected.responses?.telefono && (
                   <a href={`https://wa.me/${selected.responses.telefono.replace(/\D/g, '')}?text=Hola ${selected.responses.nombre || ''}, soy del equipo HUTEC Digital y nos gustaría coordinar tu demostración personalizada.`}
                     target="_blank" rel="noopener noreferrer"
-                    className="flex-1 py-3 flex items-center justify-center gap-2 border border-white/10 text-slate-300 rounded-xl text-sm font-medium hover:bg-white/5 transition-all">
-                    <Phone size={14} /> WhatsApp
+                    className="flex-1 py-4 flex items-center justify-center gap-2 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-xl text-sm font-bold hover:shadow-lg hover:shadow-emerald-500/30 transition-all">
+                    <Phone size={18} /> WhatsApp
                   </a>
                 )}
               </div>

@@ -80,12 +80,9 @@ export default function AdminDashboard() {
     setLoading(false);
   }, []);
 
+  // Cargar datos inmediatamente al montar el componente
   useEffect(() => {
-    const timeoutId = window.setTimeout(() => {
-      void loadData();
-    }, 0);
-
-    return () => window.clearTimeout(timeoutId);
+    loadData();
   }, [loadData]);
 
   const handleLogout = () => { sessionStorage.removeItem('hutec_admin'); router.push('/admin'); };

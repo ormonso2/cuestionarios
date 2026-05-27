@@ -11,55 +11,55 @@ import {
 const QUESTIONNAIRES = [
   {
     key: 'generic', label: 'Cuestionario General', desc: 'Aplica para cualquier empresa. Incluye nómina, asistencia, reportes y más.',
-    icon: <Building2 size={22} />, color: '#00f2fe', param: null,
+    icon: <Building2 size={22} />, color: '#00f2fe', param: null, comingSoon: false,
   },
   {
     key: 'restaurantes', label: 'Restaurantes & Gastronomía', desc: 'Optimizado para restaurantes, cadenas, cafeterías y negocios de alimentos.',
-    icon: <Utensils size={22} />, color: '#f97316', param: 'restaurantes',
+    icon: <Utensils size={22} />, color: '#f97316', param: 'restaurantes', comingSoon: false,
   },
   {
     key: 'construccion', label: 'Construcción & Obra', desc: 'Para constructoras, contratistas y empresas con personal en campo u obras.',
-    icon: <HardHat size={22} />, color: '#eab308', param: 'construccion',
+    icon: <HardHat size={22} />, color: '#eab308', param: 'construccion', comingSoon: false,
   },
   {
     key: 'salud', label: 'Área de la Salud', desc: 'Para clínicas, hospitales, consultorios y establecimientos médicos.',
-    icon: <Heart size={22} />, color: '#ec4899', param: 'salud',
+    icon: <Heart size={22} />, color: '#ec4899', param: 'salud', comingSoon: false,
   },
   {
     key: 'it', label: 'Tecnología (IT)', desc: 'Para empresas de software, startups y empresas de tecnología.',
-    icon: <Settings size={22} />, color: '#8b5cf6', param: 'it',
+    icon: <Settings size={22} />, color: '#8b5cf6', param: 'it', comingSoon: false,
   },
   {
     key: 'manufactura', label: 'Manufactura & Industria', desc: 'Para plantas industriales, manufactura y producción.',
-    icon: <Factory size={22} />, color: '#64748b', param: 'manufactura',
+    icon: <Factory size={22} />, color: '#64748b', param: 'manufactura', comingSoon: false,
   },
   {
     key: 'comercio', label: 'Comercio Minorista', desc: 'Para tiendas, boutiques, cadenas de retail y comercios.',
-    icon: <ShoppingBag size={22} />, color: '#06b6d4', param: 'comercio',
+    icon: <ShoppingBag size={22} />, color: '#06b6d4', param: 'comercio', comingSoon: false,
   },
   {
     key: 'logistica', label: 'Transporte & Logística', desc: 'Para empresas de transporte, flota y distribución.',
-    icon: <Truck size={22} />, color: '#10b981', param: 'logistica',
+    icon: <Truck size={22} />, color: '#10b981', param: 'logistica', comingSoon: false,
   },
   {
     key: 'agricultura', label: 'Agricultura & Agro', desc: 'Para agronegocios, ranchos y empresas del campo.',
-    icon: <Leaf size={22} />, color: '#22c55e', param: 'agricultura',
+    icon: <Leaf size={22} />, color: '#22c55e', param: 'agricultura', comingSoon: false,
   },
   {
     key: 'educacion', label: 'Educación', desc: 'Para escuelas, colegios, universidades e instituciones educativas.',
-    icon: <GraduationCap size={22} />, color: '#f59e0b', param: 'educacion',
+    icon: <GraduationCap size={22} />, color: '#f59e0b', param: 'educacion', comingSoon: false,
   },
   {
     key: 'finanzas', label: 'Finanzas & Contabilidad', desc: 'Para despachos contables, financieras y empresas del sector.',
-    icon: <TrendingUp size={22} />, color: '#3b82f6', param: 'finanzas',
+    icon: <TrendingUp size={22} />, color: '#3b82f6', param: 'finanzas', comingSoon: false,
   },
   {
     key: 'deportes', label: 'Deportes & Fitness', desc: 'Para gimnasios, clubes deportivos y centros de salud física.',
-    icon: <Trophy size={22} />, color: '#ef4444', param: 'deportes',
+    icon: <Trophy size={22} />, color: '#ef4444', param: 'deportes', comingSoon: false,
   },
   {
     key: 'eventos', label: 'Eventos & Entretenimiento', desc: 'Para empresas de eventos, producción y entretenimiento.',
-    icon: <Calendar size={22} />, color: '#a855f7', param: 'eventos',
+    icon: <Calendar size={22} />, color: '#a855f7', param: 'eventos', comingSoon: false,
   },
 ];
 

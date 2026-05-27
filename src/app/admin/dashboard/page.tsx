@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import {
   Building2, User, Mail, Phone, Calendar, RefreshCw, LogOut,
   ChevronRight, Search, Filter, BarChart2, Users, FileText,
-  Clock, X, Briefcase, Link2, Zap, Crown, Hexagon
+  Clock, X, Briefcase, ArrowLeft
 } from 'lucide-react';
 
 type Submission = {
@@ -180,7 +180,7 @@ export default function AdminDashboard() {
           <div className="flex items-center gap-2 sm:gap-3">
             <button onClick={() => router.push('/admin/questionnaire')}
               className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-cyan-500/15 border border-cyan-500/40 text-cyan-400 text-sm font-semibold hover:bg-cyan-500/25 hover:border-cyan-400/60 transition-all duration-300 shadow-lg shadow-cyan-500/10">
-              <Crown size={16} /> <span className="hidden sm:inline">Cuestionarios</span>
+              <span className="hidden sm:inline">Cuestionarios</span>
             </button>
             <button onClick={loadData} disabled={loading}
               className="flex items-center gap-2 px-3 py-2.5 rounded-xl border border-white/10 text-slate-400 text-sm font-medium hover:bg-white/5 hover:text-slate-200 transition-all duration-300">
@@ -197,8 +197,7 @@ export default function AdminDashboard() {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Welcome Message */}
         <div className="mb-8">
-          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2 flex items-center gap-3">
-            <Zap className="text-amber-400" size={28} />
+          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">
             Dashboard de Leads
           </h2>
           <p className="text-slate-400 text-sm sm:text-base">Visualiza y gestiona todos los registros de tus cuestionarios</p>

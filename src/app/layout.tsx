@@ -11,6 +11,11 @@ const breeSerif = Bree_Serif({
 export const metadata: Metadata = {
   title: "HUTEC - Evaluación de Demo",
   description: "Impulsa tu futuro interactivo",
+  icons: {
+    icon: "/_PORTAFOLIO-HUTEC.png",
+    shortcut: "/_PORTAFOLIO-HUTEC.png",
+    apple: "/_PORTAFOLIO-HUTEC.png",
+  },
 };
 
 export default function RootLayout({

@@ -19,7 +19,6 @@ body {
   background-color: var(--bg-dark);
   color: var(--text-main);
   font-family: var(--font-bree-serif), serif;
-  overflow: hidden;
 }
 
 ::-webkit-scrollbar { width: 4px; }
